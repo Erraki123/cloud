@@ -3,14 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Todo List – TP Cloud</title>
+  <title>Formulaire – TP Cloud</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: #f0f4f8;
+      background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+      min-height: 100vh;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
+      align-items: center;
       padding: 40px 16px;
     }
     .container {
@@ -18,27 +20,24 @@
       border-radius: 16px;
       padding: 32px;
       width: 100%;
-      max-width: 500px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      max-width: 520px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+      margin-bottom: 30px;
     }
-    h1 {
-      text-align: center;
-      color: #ff6d00;
-      margin-bottom: 8px;
+    h1 { text-align: center; color: #ff6d00; margin-bottom: 6px; font-size: 24px; }
+    p.subtitle { text-align: center; color: #888; font-size: 13px; margin-bottom: 24px; }
+    .live-badge {
+      display: inline-block;
+      background: #e8f5e9;
+      color: #2e7d32;
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 20px;
+      margin-left: 6px;
     }
-    p.subtitle {
-      text-align: center;
-      color: #888;
-      font-size: 13px;
-      margin-bottom: 24px;
-    }
-    .form-row {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 24px;
-    }
+    label { display: block; font-size: 13px; font-weight: 600; color: #555; margin-bottom: 5px; margin-top: 14px; }
     input[type="text"] {
-      flex: 1;
+      width: 100%;
       padding: 10px 14px;
       border: 2px solid #ddd;
       border-radius: 8px;
@@ -47,65 +46,74 @@
       transition: border 0.2s;
     }
     input[type="text"]:focus { border-color: #ff6d00; }
-    button {
+    button.submit-btn {
+      width: 100%;
+      margin-top: 20px;
       background: #ff6d00;
       color: white;
       border: none;
-      padding: 10px 18px;
+      padding: 12px;
       border-radius: 8px;
-      font-size: 15px;
+      font-size: 16px;
       cursor: pointer;
       transition: background 0.2s;
     }
-    button:hover { background: #e65100; }
-    ul { list-style: none; }
-    li {
+    button.submit-btn:hover { background: #e65100; }
+    #msg { text-align: center; margin-top: 10px; font-size: 13px; color: #2e7d32; min-height: 18px; }
+    .list-container {
+      background: white;
+      border-radius: 16px;
+      padding: 24px 32px;
+      width: 100%;
+      max-width: 520px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+    }
+    .list-container h2 { color: #333; margin-bottom: 16px; font-size: 18px; }
+    .card {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 12px 14px;
       background: #f9f9f9;
-      border-radius: 8px;
-      margin-bottom: 8px;
-      font-size: 15px;
       border-left: 4px solid #ff6d00;
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin-bottom: 10px;
     }
-    li .delete-btn {
+    .card .name { font-weight: 700; font-size: 15px; color: #333; }
+    .card .ville { color: #888; font-size: 13px; margin-top: 2px; }
+    .card .del {
       background: transparent;
+      border: none;
       color: #e53935;
       font-size: 18px;
-      padding: 0 6px;
-      border-radius: 4px;
+      cursor: pointer;
+      padding: 4px 8px;
     }
-    li .delete-btn:hover { background: #fdecea; }
-    #status {
-      text-align: center;
-      font-size: 12px;
-      color: #aaa;
-      margin-top: 16px;
-    }
-    .live-badge {
-      display: inline-block;
-      background: #e8f5e9;
-      color: #2e7d32;
-      font-size: 11px;
-      padding: 2px 8px;
-      border-radius: 20px;
-      margin-left: 8px;
-    }
+    #status { text-align: center; font-size: 12px; color: #aaa; margin-top: 8px; }
   </style>
 </head>
 <body>
+
   <div class="container">
-    <h1>🔥 Todo List <span class="live-badge">● LIVE</span></h1>
+    <h1>📋 Formulaire <span class="live-badge">● LIVE</span></h1>
     <p class="subtitle">TP Cloud Computing – Firebase + Vercel</p>
 
-    <div class="form-row">
-      <input type="text" id="taskInput" placeholder="Ajouter une tâche..." />
-      <button onclick="addTask()">Ajouter</button>
-    </div>
+    <label>Nom</label>
+    <input type="text" id="nom" placeholder="Ex: Erraki" />
 
-    <ul id="taskList"></ul>
+    <label>Prénom</label>
+    <input type="text" id="prenom" placeholder="Ex: Abdo" />
+
+    <label>Ville</label>
+    <input type="text" id="ville" placeholder="Ex: Casablanca" />
+
+    <button class="submit-btn" onclick="submitForm()">✅ Envoyer</button>
+    <p id="msg"></p>
+  </div>
+
+  <div class="list-container">
+    <h2>👥 Inscrits en temps réel</h2>
+    <div id="liste"></div>
     <p id="status">Connexion à Firebase...</p>
   </div>
 
